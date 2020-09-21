@@ -111,12 +111,6 @@ PRODUCT_PACKAGES += \
     LineageSettingsProvider \
     Updater
 
-# Prebuilt nethunter packages
-PRODUCT_PACKAGES += \
-    NetHunter-T420 \
-    Term-420 \
-    NScripts
-
 # Themes
 PRODUCT_PACKAGES += \
     LineageThemesStub \
