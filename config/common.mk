@@ -86,6 +86,9 @@ ifeq ($(WITH_TWRP),true)
 include vendor/lineage/config/twrp.mk
 endif
 
+# KekHunterOS
+include vendor/lineage/config/kekhunter.mk
+
 # Do not include art debug targets
 PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 
