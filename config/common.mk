@@ -70,10 +70,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/lineage/config/permissions/org.lineageos.android.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.lineageos.android.xml
 
-# Enforce privapp-permissions whitelist
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.control_privapp_permissions=enforce
-
 # Include AOSP audio files
 include vendor/lineage/config/aosp_audio.mk
 
@@ -109,23 +105,46 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Terminal
 
+# Lineage packages
+PRODUCT_PACKAGES += \
+    LineageParts \
+    LineageSettingsProvider \
+    Updater
+
 # Prebuilt nethunter packages
 PRODUCT_PACKAGES += \
     NetHunter-T420 \
     Term-420 \
     NScripts
 
-# Lineage packages
-PRODUCT_PACKAGES += \
-    LineageParts \
-    LineageSettingsProvider \
-    LineageSetupWizard \
-    Updater
-
 # Themes
 PRODUCT_PACKAGES += \
     LineageThemesStub \
     ThemePicker
+
+# Prebuilt apks
+PRODUCT_PACKAGES += \
+    duckduckgo \
+    ShuttleFree
+
+# omni
+PRODUCT_PACKAGES += \
+    OmniJaws
+
+# FLOSS
+PRODUCT_PACKAGES += \
+    F-DroidPrivilegedExtension
+ifeq ($(FLOSS_PACK), aurora)
+PRODUCT_PACKAGES += \
+    AuroraStore \
+    F-DroidPrivilegedExtension
+endif
+ifeq ($(FLOSS_PACK), microg)
+PRODUCT_PACKAGES += \
+    AuroraStore \
+    F-DroidPrivilegedExtension \
+    GmsCore
+endif
 
 # Extra tools in Lineage
 PRODUCT_PACKAGES += \
@@ -196,8 +215,24 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/lineage/overlay/common
+ifeq ($(PRODUCT_GMS_CLIENTID_BASE), android-realme)
+DEVICE_PACKAGE_OVERLAYS += vendor/lineage/overlay/realme
+endif
 
-PRODUCT_VERSION_MAJOR = 0
+# Long Screenshot
+PRODUCT_PACKAGES += \
+    StitchImage
+
+# Face Unlock
+ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
+PRODUCT_PACKAGES += \
+    FaceUnlockService
+TARGET_FACE_UNLOCK_SUPPORTED := true
+endif
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.face.moto_unlock_service=$(TARGET_FACE_UNLOCK_SUPPORTED)
+
+PRODUCT_VERSION_MAJOR = 17
 PRODUCT_VERSION_MINOR = 1
 PRODUCT_VERSION_MAINTENANCE := 0
 
@@ -255,7 +290,26 @@ ifeq ($(LINEAGE_BUILDTYPE), UNOFFICIAL)
     endif
 endif
 
-ifeq ($(LINEAGE_BUILDTYPE), RELEASE)
+ifeq ($(TARGET_FLOS), true)
+    LINEAGE_BUILDTYPE := UNOFFICIAL
+endif
+
+ifneq ($(FLOSS_PACK), )
+    FLOS_TYPE := $(FLOSS_PACK)
+else
+    FLOS_TYPE := vanilla
+endif
+
+# Do not enforce privapp-permissions whitelist on unofficial builds
+ifneq ($(LINEAGE_BUILDTYPE), UNOFFICIAL)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.control_privapp_permissions=enforce
+endif
+
+ifeq ($(TARGET_FLOS), true)
+    LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-FORK-$(FLOS_TYPE)-$(shell date -u +%Y%m%d-%H%M)-$(LINEAGE_BUILD)
+else
+  ifeq ($(LINEAGE_BUILDTYPE), RELEASE)
     ifndef TARGET_VENDOR_RELEASE_BUILD_ID
         LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)$(PRODUCT_VERSION_DEVICE_SPECIFIC)-$(LINEAGE_BUILD)
     else
@@ -269,7 +323,7 @@ ifeq ($(LINEAGE_BUILDTYPE), RELEASE)
             LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)$(PRODUCT_VERSION_DEVICE_SPECIFIC)-$(LINEAGE_BUILD)
         endif
     endif
-else
+  else
     ifeq ($(LINEAGE_VERSION_MAINTENANCE),0)
         ifeq ($(LINEAGE_VERSION_APPEND_TIME_OF_DAY),true)
             LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d_%H%M%S)-$(LINEAGE_BUILDTYPE)$(LINEAGE_EXTRAVERSION)-$(LINEAGE_BUILD)
@@ -283,6 +337,7 @@ else
             LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(LINEAGE_VERSION_MAINTENANCE)-$(shell date -u +%Y%m%d)-$(LINEAGE_BUILDTYPE)$(LINEAGE_EXTRAVERSION)-$(LINEAGE_BUILD)
         endif
     endif
+  endif
 endif
 
 PRODUCT_EXTRA_RECOVERY_KEYS += \
@@ -315,6 +370,18 @@ ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
 endif
 endif
 
+# Enable ccache
+USE_CCACHE := true
+
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 -include vendor/lineage/config/partner_gms.mk
+
+ifeq ($(BOARD_USES_QCOM_HARDWARE),)
+-include vendor/qcom/common/perf/perf-vendor.mk
+TARGET_COMMON_QTI_COMPONENTS := perf
+
+PRODUCT_BOOT_JARS += \
+    QPerformance \
+    UxPerformance
+endif
 
