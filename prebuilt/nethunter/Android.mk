@@ -28,11 +28,11 @@ LOCAL_SRC_FILES := bin/bootkali \
 		bin/bootkali_bash \
 		bin/bootkali_env \
 		bin/bootkali_init \
-		bootkali_log \
-		bootkali_login \
-		changemac \
-		chrootmgr \
-		killkali
+		bin/bootkali_log \
+		bin/bootkali_login \
+		bin/changemac \
+		bin/chrootmgr \
+		bin/killkali
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
