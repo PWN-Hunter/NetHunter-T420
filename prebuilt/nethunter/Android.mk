@@ -1,6 +1,8 @@
 LOCAL_PATH := $(call my-dir)
 
+#
 # Kali nhapps
+#
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := NetHunter-T420
@@ -20,19 +22,69 @@ LOCAL_MODULE_CLASS := APPS
 LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 include $(BUILD_PREBUILT)
 
-# Kali bin files
+#
+# Kali bin files (Mostly needed for other terminals if u dont wanna use nhterm)
+#
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := NScripts
-LOCAL_SRC_FILES := bin/bootkali \
-		bin/bootkali_bash \
-		bin/bootkali_env \
-		bin/bootkali_init \
-		bin/bootkali_log \
-		bin/bootkali_login \
-		bin/changemac \
-		bin/chrootmgr \
-		bin/killkali
+LOCAL_MODULE := bootkali
+LOCAL_SRC_FILES:= bin/bootkali
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := bootkali_bash
+LOCAL_SRC_FILES:= bin/bootkali_bash
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := bootkali_env
+LOCAL_SRC_FILES:= bin/bootkali_env
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := bootkali_init
+LOCAL_SRC_FILES:= bin/bootkali_init
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := bootkali_log
+LOCAL_SRC_FILES:= bin/bootkali_log
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := bootkali_login
+LOCAL_SRC_FILES:= bin/bootkali_login
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := chrootmgr
+LOCAL_SRC_FILES:= bin/chrootmgr
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := killkali
+LOCAL_SRC_FILES:= bin/killkali
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
