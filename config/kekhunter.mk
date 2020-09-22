@@ -1,5 +1,8 @@
 # Separate mk for KekHunterOS
 
+# Include TWRP
+include vendor/lineage/config/twrp.mk
+
 #
 # Prebuilt nethunter packages
 #
@@ -26,5 +29,4 @@ PRODUCT_PACKAGES += \
 #
 
 PRODUCT_PACKAGES += \
-    fdroid \
-    microsoft_launcher 
+    fdroid
