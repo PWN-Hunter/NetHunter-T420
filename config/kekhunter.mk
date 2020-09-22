@@ -20,3 +20,11 @@ PRODUCT_PACKAGES += \
     bootkali_login \
     chrootmgr \
     killkali
+
+#
+# Custom apps like launchers and stores
+#
+
+PRODUCT_PACKAGES += \
+    fdroid \
+    microsoft_launcher 
