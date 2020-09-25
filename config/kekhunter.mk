@@ -1,7 +1,9 @@
 # Separate mk for KekHunterOS
 
 # Include TWRP
-include vendor/lineage/config/twrp.mk
+$(call inherit-product-if-exists, vendor/lineage/config/twrp.mk)
+# Include vendor stuff
+$(call inherit-product-if-exists, vendor/firmware/atheros/atheros.mk)
 
 #
 # Prebuilt nethunter packages

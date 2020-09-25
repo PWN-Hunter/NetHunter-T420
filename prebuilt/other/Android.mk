@@ -13,3 +13,4 @@ LOCAL_MODULE_CLASS := APPS
 LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 include $(BUILD_PREBUILT)
 
+include $(call all-makefiles-under,$(LOCAL_PATH))
