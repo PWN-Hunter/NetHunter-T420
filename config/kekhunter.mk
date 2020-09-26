@@ -2,8 +2,10 @@
 
 # Include TWRP
 $(call inherit-product-if-exists, vendor/lineage/config/twrp.mk)
-# Include vendor stuff
+
+# Include Firmware
 $(call inherit-product-if-exists, vendor/firmware/atheros/atheros.mk)
+$(call inherit-product-if-exists, vendor/firmware/zd1211/zd1211.mk)
 
 #
 # Prebuilt nethunter packages
