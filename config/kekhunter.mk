@@ -13,6 +13,13 @@ PRODUCT_PACKAGES += \
     Term-420 \
 
 #
+# Include firmware
+#
+
+PRODUCT_PACKAGES += \
+    firmware
+
+#
 # NH Scripts for otherr terminals
 #
 
