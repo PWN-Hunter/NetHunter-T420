@@ -7,6 +7,11 @@ $(call inherit-product-if-exists, vendor/lineage/config/twrp.mk)
 $(call inherit-product-if-exists, vendor/firmware/atheros/atheros.mk)
 $(call inherit-product-if-exists, vendor/firmware/zd1211/zd1211.mk)
 
+# Include some gnu bin libraries for ANDROID!!!!
+$(call inherit-product-if-exists, vendor/libraries/ncurses/ncurses.mk)
+$(call inherit-product-if-exists, vendor/libraries/bash/bash.mk)
+$(call inherit-product-if-exists, vendor/libraries/intl/intl.mk)
+
 #
 # Prebuilt nethunter packages
 #

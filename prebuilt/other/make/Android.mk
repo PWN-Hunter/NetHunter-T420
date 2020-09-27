@@ -1,0 +1,13 @@
+LOCAL_PATH := $(call my-dir)
+
+#
+# custom apps
+#
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := make
+LOCAL_SRC_FILES:= xbin/make
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
