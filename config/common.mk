@@ -21,6 +21,9 @@ else
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
 
+# KekHunterOS
+-include vendor/lineage/config/kekhunter.mk
+
 # Backup Tool
 PRODUCT_COPY_FILES += \
     vendor/lineage/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
@@ -86,9 +89,6 @@ ifeq ($(WITH_TWRP),true)
 include vendor/lineage/config/twrp.mk
 endif
 
-# KekHunterOS
-include vendor/lineage/config/kekhunter.mk
-
 # Do not include art debug targets
 PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 
@@ -99,10 +99,6 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 
 # Disable vendor restrictions
 PRODUCT_RESTRICT_VENDOR_FILES := false
-
-# Bootanimation
-PRODUCT_PACKAGES += \
-    bootanimation.zip
 
 # AOSP packages
 PRODUCT_PACKAGES += \
@@ -381,4 +377,3 @@ PRODUCT_BOOT_JARS += \
     QPerformance \
     UxPerformance
 endif
-
